@@ -49,14 +49,15 @@ Além de servir como uma ferramenta de gestão financeira, o projeto tem como ob
 
 ## Estrutura dos Dados
 
-### Receita
+### Entradas
 
 ```python
 {
     "id": 1,
-    "descricao": "Salário",
     "valor": 3500.00,
-    "data": "2026-06-10"
+    "descricao": "Salário Empresa",
+    "categoria": "Salário",
+    "data": "DD/MM/AAAA"
 }
 ```
 
@@ -65,10 +66,10 @@ Além de servir como uma ferramenta de gestão financeira, o projeto tem como ob
 ```python
 {
     "id": 1,
-    "descricao": "Mercado",
     "valor": 250.00,
+    "descricao": "Mercado",
     "categoria": "Alimentação",
-    "data": "2026-06-10"
+    "data": "DD/MM/AAAA"
 }
 ```
 
@@ -89,7 +90,7 @@ Além de servir como uma ferramenta de gestão financeira, o projeto tem como ob
 dashboard-gastos/
 │
 ├── main.py
-├── receitas.py
+├── entradas.py
 ├── despesas.py
 ├── categorias.py
 ├── relatorios.py
@@ -97,10 +98,13 @@ dashboard-gastos/
 ├── dados.py
 │
 ├── data/
-│   ├── receitas.json
-│   ├── despesas.json
-│   └── categorias.json
+│   ├── dados_entradas.json
+│   ├── dados_despesas.json
+│   ├── dados_categorias.json
+│   └── dados_metas.json
 │
+├── graficos/
+│   ├── graficos/..
 └── README.md
 ```
 
@@ -120,6 +124,7 @@ dashboard-gastos/
 ## Tecnologias Utilizadas
 
 * Python
+* matplotlib
 * JSON
 * Programação Modular
 * Estruturas de Dados (listas e dicionários)
