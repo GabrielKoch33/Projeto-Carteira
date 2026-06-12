@@ -12,7 +12,7 @@ lista_categorias = [
 ]
 
 lista_entradas =[
-    # lista de dicionários
-  
+    #
 ]
+
 listaId_Entradas = []

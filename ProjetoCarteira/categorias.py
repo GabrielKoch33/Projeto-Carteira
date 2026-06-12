@@ -3,86 +3,63 @@ import utils as u
 from estruturasDados import lista_categorias
 
 def listarCategorias():
+    print(f'{'ID':<5}{'CATEGORIA':<10}')
     for categoria in lista_categorias:
-        print(f'{categoria["id"]}  -  {categoria["nome"]}')
+        print(f'{categoria["id"]:<5}{categoria["nome"]:<10}')
 
    
 def criarCatPersonalizada():
     nomeCategoria = input('Digite o nome da nova categoria: ').strip().title()
 
-    if u.ValidaCriarCategoria(nomeCategoria,lista_categorias):
-        print(f'{nomeCategoria} já existe, duplicadas não são válidas')
-        u.readKey()
-        menuCategorias()
-
+    if u.ValidaCriar(nomeCategoria,lista_categorias):
+        return 'Essa categoria já existe, duplicadas não são permitidas'
     else:
-        lista_categorias.append({"id":u.calculaId(lista_categorias),"nome":nomeCategoria,"default":False})
-        print(f'{nomeCategoria} adicionada!')
-        u.readKey()
-        menuCategorias()
-    
+        lista_categorias.append({"id":u.calculaId(lista_categorias),
+                                 "nome":nomeCategoria,"default":False})
+        return 'Categoria adicionada!'
 
 def editarCatPersonalizada():
-    listarCategorias()
-    nomeCategoria = input('Digite o Id da categoria que deseja editar: ').strip().title()
-
-    if u.verificaId(nomeCategoria,lista_categorias):
-        if u.existeCategoria(nomeCategoria,lista_categorias,True):
-            print('Não é possível alterar categorias padrões do sistema')
-            u.readKey()
-            menuCategorias()
-        else:
-            novaCategoria = input('Digite o nome que você deseja alterar: ').strip().title()
-            print(f'Alterada: "{nomeCategoria}" -> "{novaCategoria}"')
-            for item in lista_categorias:
-                if item["nome"] == nomeCategoria:
-                    item['nome'] = novaCategoria
-            u.readKey()
-            menuCategorias()
-            
-    else:
-        print('Não é possível editar categorias inexistêntes, verifique a ortografia ou crie a devida categoria')
-        u.readKey()
-        menuCategorias()
+    if len(lista_categorias) == 10:
+        return 'Não foram cadastradas Categorias personalizadas'
     
+    else:
+        listarCategorias()
+        idCategoria = int(input('Digite o id da categoria que deseja editar: '))
+
+        if idCategoria <= 10:
+            return 'Categorias padrões do sistema não são editáveis'
+        
+        else:
+            result = u.encontraIdIndex(idCategoria,lista_categorias)
+            if result[0] == True:
+                novoValor = input('Qual será o novo nome?: ').title()
+                lista_categorias[result[1]]["nome"] = novoValor
+                return 'Campo alterado com sucesso!'
+
+            elif result[0] == False:
+                return 'Não foi possível encontrar esse item!'
+
 
 def excluirCatPersonalizada():
-    listarCategorias()
-    nomeCategoria = input('Digite o Id da categoria que deseja remover: ').strip().title()
-
-    if u.existeCategoria(nomeCategoria,lista_categorias):
-        if u.existeCategoria(nomeCategoria,lista_categorias,True):
-            print('Não é possível alterar categorias padrões do sistema')
-            u.readKey()
-            menuCategorias()
-        else:
-            print(f'Removida: "{nomeCategoria}"')
-            for item in lista_categorias:
-                if item["nome"] == nomeCategoria:
-                    lista_categorias.remove(item)
-            u.readKey()
-            menuCategorias()
-            
+    if len(lista_categorias) == 10:
+        return 'Não foram cadastradas Categorias personalizadas'
     else:
-        print('Não é possível remover categorias inexistêntes, verifique a ortografia ou crie a devida categoria')
-        u.readKey()
-        menuCategorias()
+        listarCategorias()
+        idCategoria = int(input('Digite o id da categoria que deseja remover: '))
+        
+        if idCategoria <= 10:
+            return 'Categorias padrões do sistema não são deletáveis'
 
-    u.limparTela() 
-    u.readKey()
-    menuCategorias()
+        else:
+            result = u.encontraIdIndex(idCategoria,lista_categorias)
+            if result[0] == True:
+                lista_categorias.pop(result[1])
+                return 'Campo removido com sucesso!'
+            
+            elif result[0] == False:
+                return 'Não foi possível encontrar esse item ou não foram cadastradas categorias customizadas'
 
-lista_categorias = [ 
-  {"nome":"Alimentação","default":True},
-  {"nome":"Transporte","default":True},
-  {"nome":"Moradia","default":True},
-  {"nome":"Saúde","default":True},
-  {"nome":"Educação","default":True},
-  {"nome":"Lazer","default":True},
-  {"nome":"Salário","default":True},
-  {"nome":"Investimentos","default":True},
-  {"nome":"Outros","default":True}
-]
+
 
 def menuCategorias():
     u.limparTela()
@@ -106,15 +83,24 @@ def menuCategorias():
 
     elif opcao == '2':
         u.limparTela()
-        criarCatPersonalizada()
-
+        msg =criarCatPersonalizada()
+        print(msg)
+        u.readKey()
+        menuCategorias()
+        
     elif opcao == '3':
         u.limparTela()
-        editarCatPersonalizada()
+        msg = editarCatPersonalizada()
+        print(msg)
+        u.readKey()
+        menuCategorias()
 
     elif opcao == '4':
         u.limparTela()
-        excluirCatPersonalizada()
+        msg = excluirCatPersonalizada()
+        print(msg)
+        u.readKey()
+        menuCategorias()
 
     elif opcao == '0':
         u.limparTela()
