@@ -3,30 +3,30 @@ import utils as u
 from estruturasDados import lista_categorias
 
 def listarCategorias():
-    for indice,categoria in enumerate(lista_categorias):
-        print(f'{indice+1}  -  {categoria["nome"]}')
+    for categoria in lista_categorias:
+        print(f'{categoria["id"]}  -  {categoria["nome"]}')
 
    
-
 def criarCatPersonalizada():
     nomeCategoria = input('Digite o nome da nova categoria: ').strip().title()
 
-    if u.existeCategoria(nomeCategoria,lista_categorias):
+    if u.ValidaCriarCategoria(nomeCategoria,lista_categorias):
         print(f'{nomeCategoria} já existe, duplicadas não são válidas')
         u.readKey()
         menuCategorias()
 
     else:
-        lista_categorias.append({"nome":nomeCategoria,"default":False})
+        lista_categorias.append({"id":u.calculaId(lista_categorias),"nome":nomeCategoria,"default":False})
         print(f'{nomeCategoria} adicionada!')
         u.readKey()
         menuCategorias()
     
 
 def editarCatPersonalizada():
-    nomeCategoria = input('Digite o nome da categoria que deseja editar: ').strip().title()
+    listarCategorias()
+    nomeCategoria = input('Digite o Id da categoria que deseja editar: ').strip().title()
 
-    if u.existeCategoria(nomeCategoria,lista_categorias):
+    if u.verificaId(nomeCategoria,lista_categorias):
         if u.existeCategoria(nomeCategoria,lista_categorias,True):
             print('Não é possível alterar categorias padrões do sistema')
             u.readKey()
@@ -47,8 +47,8 @@ def editarCatPersonalizada():
     
 
 def excluirCatPersonalizada():
-  
-    nomeCategoria = input('Digite o nome da categoria que deseja remover: ').strip().title()
+    listarCategorias()
+    nomeCategoria = input('Digite o Id da categoria que deseja remover: ').strip().title()
 
     if u.existeCategoria(nomeCategoria,lista_categorias):
         if u.existeCategoria(nomeCategoria,lista_categorias,True):

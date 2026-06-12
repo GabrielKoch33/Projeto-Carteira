@@ -12,9 +12,8 @@ def adicionarEntradas():
         u.readKey()
         menuEntradas()
     else: #Esse else ñ é necessário, afinal a função pode retornar ou str, ou float
-        descricaoEntrada = input('Digite a fonte da entrada (salário, proventos, etc..): ').strip().title()
-        dataAtual = datetime.date.today()# ano, mês, dia
-        dataDMA = dataAtual.strftime("%d/%m/%Y")#dia(0%),mês(0%),XXXX
+        descricaoEntrada = input('Digite a fonte da entrada (salário, proventos, etc..): ').strip().title().split(' ')
+        dataDMA = input('Digite a data da entrada DD/MM/YYYY')
         listarCategorias()
         categoriaIndex = int(input('Digite o Nº da categoria desta entrada: '))
         lista_entradas.append({"id":u.calculaId(lista_entradas),
@@ -29,14 +28,32 @@ def adicionarEntradas():
 
     
 def editarEntradas():
-    u.readKey()
-    pass
+    if listarEntradas():
+        while True:
+            idEntrada = input('Digite o Id da entrada que deseja alterar ([999] para SAIR): ').strip()
+            if not idEntrada.isnumeric() or idEntrada == '':
+                print('Escolha uma opção (numérica) válida!')
+            elif idEntrada.isnumeric():
+                break
+        while True:
+            campo = print('Qual campo você deseja editar?: ').lower()
+            if campo == 'id':
+                print(f'Não é permitido alterar o campo {campo}')
+            elif campo not in ("valor","descricao","categoria","data"):
+                print('Insira um campo válido ou remova os acentos (~,ç,etc)')
+            else:
+                break
+        
+    else:
+        print('Nenhuma entrada foi registrada ainda! Nada para editar')
+        
+    
 def removerEntradas():
     u.readKey()
     pass
 def listarEntradas():
     if len(lista_entradas) == 0:
-        print('Nenhuma entrada foi registrada ainda!')
+        return False
     else:
         print(f'{"ID":<5} {"VALOR":<10} {"DESCRIÇÃO":<20} {"CATEGORIA":<15} {"DATA":<12}')
         for item in lista_entradas:
@@ -47,8 +64,7 @@ def listarEntradas():
             f'{item["categoria"]:<15} '
             f'{item["data"]:<12}'#Alinha para ESQUERDA e reserva 12 espaços
             )
-    u.readKey()
-    menuEntradas()
+    return True
 
 def buscarPorDescricao():
     u.readKey()
@@ -93,9 +109,14 @@ def menuEntradas():
         elif opcao == '3':
             u.limparTela()
             removerEntradas()
+
         elif opcao == '4':
             u.limparTela()
-            listarEntradas()
+            if not listarEntradas():
+                 print('Nenhuma entrada foi registrada ainda!')
+            u.readKey()
+            menuEntradas()
+
         elif opcao == '5':
             u.limparTela()
             buscarPorDescricao()

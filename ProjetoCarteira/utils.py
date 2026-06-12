@@ -16,7 +16,7 @@ def pause():
 def readKey():
     input("Pressione ENTER para voltar ao menu...")
 
-def existeCategoria(ref_categoria: str,ref_lista: list,padrao=None)->bool:
+def ValidaCriarCategoria(ref_categoria: str,ref_lista: list,padrao=None)->bool:
     '''
     padrao == none: apenas verificamos se existe
     padrao == true: verificamos o campo default
@@ -56,3 +56,8 @@ def calculaId(lista):
         return 1
     else:
         return max(item["id"] for item in lista) + 1
+    
+def verificaId(ref_id,ref_lista):
+    for item in ref_lista:
+        if item['id'] == ref_id:
+            return True
