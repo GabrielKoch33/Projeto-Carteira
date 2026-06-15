@@ -1,3 +1,8 @@
+'''
+- terminar editar e remover entradas
+- fazer busca por campos
+- reler e melhorar
+'''
 import utils as u
 import main as m
 from categorias import listarCategorias
@@ -9,11 +14,13 @@ def adicionarEntradas():
     if type(valorEntrada) == str:
         return valorEntrada
     
-    else: #Esse else ñ é necessário, afinal a função pode retornar ou str, ou float
+    else: 
+        # descrição será uma lista, assim podemos procurar por plavras chaves
         descricaoEntrada = input('Insira uma descrição para a entrada: ').strip().title().split(' ')
         dataDMA = input('Digite a data da entrada DD/MM/YYYY: ').strip()
         listarCategorias()
         categoriaIndex = int(input('Digite o Id da categoria desta entrada: '))
+
         lista_entradas.append({"id":u.calculaId(lista_entradas),
                             "valor":valorEntrada,
                             "descricao":descricaoEntrada,
@@ -25,18 +32,20 @@ def adicionarEntradas():
     
 def editarEntradas():
     if lista_entradas:
-        while True:
-            idEntrada = input('Digite o Id da entrada que deseja alterar: ').strip()
-            if not idEntrada.isnumeric() or idEntrada == '':
-                print('Escolha uma opção (numérica) válida!')
-            elif idEntrada.isnumeric():
-                break
-        while True:
-            campo = print('Qual campo você deseja editar?: ').lower()
+        idEntrada = input('Digite o Id da entrada que deseja alterar: ').strip()
+
+        if not idEntrada.isnumeric() or idEntrada == '':
+            return('Escolha uma opção (numérica) válida!')
+        
+        elif idEntrada.isnumeric():
+            campo = input('Qual campo você deseja editar?: ').lower()
+
             if campo == 'id':
                 return(f'Não é permitido alterar o campo {campo}')
+            
             elif campo not in ("valor","descricao","categoria","data"):
                 return('Insira um campo válido ou remova os acentos (~,ç,etc)')
+            
             else:
                 return 'INCOMPLETO'
                 
@@ -50,10 +59,13 @@ def removerEntradas():
 
 
 def listarEntradas():
+
     if len(lista_entradas) == 0:
         return 'Registro de entradas vazio. Nenhuma entrada para listar!'
+    
     else:
         print(f'{"ID":<5} {"VALOR":<10} {"DESCRIÇÃO":<20} {"CATEGORIA":<15} {"DATA":<12}')
+
         for item in lista_entradas:
            print(
             f'{item["id"]:<5} '
@@ -62,6 +74,7 @@ def listarEntradas():
             f'{item["categoria"]:<15} '
             f'{item["data"]:<12}'#Alinha para ESQUERDA e reserva 12 espaços
             )
+           
         return 'Lista retornada com sucesso!'
 
 def buscarPorDescricao():

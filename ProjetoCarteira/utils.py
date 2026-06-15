@@ -43,13 +43,15 @@ def ValidaCriar(ref_modulo: str,ref_lista: list)->bool:
     return False
                 
 def encontraIdIndex(ref_id,ref_lista):
-    #if len(ref_lista) > 10: # se houver pelo menos uma categoria cadastrada ele entra
+    '''
+    # mesmo que o user informe um valor absurdo (ex:30) ele vai rodar,
+    # pode até ocorrer de id após o 10 ser 30, mas outros 19 foram removidos
+    # mas mesmo assim ele compara os id's e retorna caso esse id exista
+    '''
     for index,item in enumerate(ref_lista): 
          if item['id'] == ref_id:
             return True, index
-    # mesmo que o user informe um valor absurdo (ex:30) ele vai rodar,
-    # pode até ocorrer de id após o 10 ser 30, mas outros 19 foram removidos
-    # mas mesmo assim ele compara os id's e retorna caso esse id exista          
+          
     return False, 1000 #1000 é para manter a consistência da tupla
     ''' 
     Usar enumarate em um fatiamento de listas [i:f]

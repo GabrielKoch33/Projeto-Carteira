@@ -4,6 +4,7 @@ from estruturasDados import lista_categorias
 
 def listarCategorias():
     print(f'{'ID':<5}{'CATEGORIA':<10}')
+    
     for categoria in lista_categorias:
         print(f'{categoria["id"]:<5}{categoria["nome"]:<10}')
 
@@ -13,9 +14,11 @@ def criarCatPersonalizada():
 
     if u.ValidaCriar(nomeCategoria,lista_categorias):
         return 'Essa categoria já existe, duplicadas não são permitidas'
+    
     else:
         lista_categorias.append({"id":u.calculaId(lista_categorias),
                                  "nome":nomeCategoria,"default":False})
+        
         return 'Categoria adicionada!'
 
 def editarCatPersonalizada():
@@ -41,8 +44,10 @@ def editarCatPersonalizada():
 
 
 def excluirCatPersonalizada():
+
     if len(lista_categorias) == 10:
         return 'Não foram cadastradas Categorias personalizadas'
+    
     else:
         listarCategorias()
         idCategoria = int(input('Digite o id da categoria que deseja remover: '))
@@ -52,6 +57,7 @@ def excluirCatPersonalizada():
 
         else:
             result = u.encontraIdIndex(idCategoria,lista_categorias)
+
             if result[0] == True:
                 lista_categorias.pop(result[1])
                 return 'Campo removido com sucesso!'
