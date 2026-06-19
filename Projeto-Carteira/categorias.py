@@ -1,5 +1,5 @@
 import utils as u
-from estruturasDados import lista_categorias
+from estruturas_dados import lista_categorias
 
 def listar_categorias():
     print(f'{'ID':<5}{'CATEGORIA':<10}')

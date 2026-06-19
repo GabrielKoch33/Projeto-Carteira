@@ -5,7 +5,7 @@
 '''
 import utils as u
 from categorias import listar_categorias
-from estruturasDados import lista_entradas, lista_categorias
+from estruturas_dados import lista_entradas, lista_categorias
 
 def adicionar_entradas():
     valorEntrada = input('Digite o valor em R$ da entrada: ')
