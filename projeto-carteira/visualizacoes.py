@@ -44,7 +44,7 @@ def menu_visualizacoes():
             u.limpar_tela()
             grafico_linha_despesas()
 
-        elif opcao == 5:
+        elif opcao == 0:
             u.limpar_tela()
             break
         
