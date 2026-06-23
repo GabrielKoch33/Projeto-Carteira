@@ -29,7 +29,7 @@ def criar_cat_personalizada():
             print('Insira um nome válido (não vazio)!')
             continue       
 
-    if u.valida_existencia(nome_categoria,lista_categorias):
+    if u.valida_existencia_campo_nome(nome_categoria,lista_categorias):
         return 'Essa categoria já existe, duplicadas não são permitidas'
     
     else:
@@ -44,13 +44,13 @@ def editar_cat_personalizada():
 
     if type(id_categoria) == int:
 
-        achaPosicao = u.encontra_id_index(id_categoria,lista_categorias)
-        if achaPosicao[0] == True:
+        achou, indice = u.encontra_id_index(id_categoria,lista_categorias)
+        if achou:
             novoValor = input('Qual será o novo nome?: ').title()
-            lista_categorias[achaPosicao[1]]["nome"] = novoValor
+            lista_categorias[indice]["nome"] = novoValor
             return 'Campo alterado com sucesso!'
 
-        elif achaPosicao[0] == False:
+        else:
            return 'Não foi possível encontrar esse item!'
         
     else:
@@ -60,10 +60,10 @@ def excluir_cat_personalizada():
     id_categoria = u.valida_editar_ou_excluir_categoria(lista_categorias)
 
     if type(id_categoria) == int:
-        achaPosicao = u.encontra_id_index(id_categoria,lista_categorias)
+        achou, indice = u.encontra_id_index(id_categoria,lista_categorias)
             # busca um linha que contenha o id indicado, retorna o index dessa linha para remover/alterar
-        if achaPosicao[0] == True:
-            lista_categorias.pop(achaPosicao[1])
+        if achou:
+            lista_categorias.pop(indice)
             return 'Campo removido com sucesso!'
             
         else:
@@ -85,7 +85,7 @@ def menu_categorias():
         print('4 - EXCLUIR CATEGORIA PERSONALIZADA')
         print('0 - VOLTAR')
         u.line()
-        opcao = u.ler_opcao(4)
+        opcao = u.ler_opcao_menu(4)
         u.line()
         
         if opcao == 1:

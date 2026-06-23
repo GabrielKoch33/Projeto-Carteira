@@ -26,7 +26,7 @@ def menu_visualizacoes():
         print('4 - LINHA DE DESPESAS')
         print('0 - VOLTAR')
         u.line()
-        opcao = u.ler_opcao(4)
+        opcao = u.ler_opcao_menu(4)
         u.line()
         if opcao == 1:
             u.limpar_tela()

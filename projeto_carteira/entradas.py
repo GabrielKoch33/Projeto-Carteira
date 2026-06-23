@@ -8,15 +8,15 @@ from categorias import listar_categorias
 from estruturasDados import lista_entradas, lista_categorias
 
 def adicionar_entradas():
-    valorEntrada = input('Digite o valor em R$ da entrada: ')
-    valorEntrada = u.converte_moeda(valorEntrada)
+    valor_entrada = input('Digite o valor em R$ da entrada: ')
+    valor_entrada = u.converte_moeda(valor_entrada)
 
-    if type(valorEntrada) == str:
-        return valorEntrada
+    if type(valor_entrada) == str:
+        return valor_entrada
     
     else: 
         # descrição será uma lista, assim podemos procurar por plavras chaves
-        descricaoEntrada = input('Insira uma descrição para a entrada: ').strip().title().split(' ')
+        descricao_entrada = input('Insira uma descrição para a entrada: ').strip().title().split(' ')
 
         while True:
             data = u.converte_data()
@@ -29,15 +29,18 @@ def adicionar_entradas():
 
             else:
                 break # senão, valor válido e insere data
+        '''
+        REVER ESSE BLOCO PARA EVITAR INSERIR UM ID INEXISTÊNTE
+        '''
         u.line()
         listar_categorias()
         u.line()
-        categoriaIndex = int(input('Digite o ID da categoria desta entrada: '))
-
+        categoria_index = int(input('Digite o ID da categoria desta entrada: '))
+    
         lista_entradas.append({"id":u.calcula_id(lista_entradas),
-                            "valor":valorEntrada,
-                            "descricao":descricaoEntrada,
-                            "categoria":lista_categorias[categoriaIndex-1]["nome"],
+                            "valor":valor_entrada,
+                            "descricao":descricao_entrada,
+                            "categoria":lista_categorias[categoria_index-1]["nome"],
                             "data":data})
             
         u.line()    
@@ -46,10 +49,10 @@ def adicionar_entradas():
     
 def editar_entradas():
 
-    listar_entradas()
-    u.line()
-
     if lista_entradas:
+        listar_entradas()
+        u.line()
+
         while True:
             try:
                 id_entrada = int(input('Digite o ID da entrada que deseja alterar: '))
@@ -61,15 +64,16 @@ def editar_entradas():
             else:
                 break #quando a entrada for validada e não der erro, saia do loop while true
 
-        achou_posicao = u.encontra_id_index(id_entrada, lista_entradas)
+        achou, indice = u.encontra_id_index(id_entrada, lista_entradas)
 
-        if not achou_posicao:
+        if not achou:
             return 'Entrada não encontrada ou cadastrada!'
                 
         else:
             campo = input('Qual campo dessa entrada você deseja editar?: ').lower().strip()
 
             match campo:
+
                 case 'id': 
                     return('Não é permitido alterar o campo ID')
                         
@@ -80,15 +84,28 @@ def editar_entradas():
                     if type(novo_valor) == str:
                         return novo_valor
                     else:
-                        lista_entradas[achou_posicao[1]]["valor"] = novo_valor
+                        lista_entradas[indice]["valor"] = novo_valor
                         return f'{campo} alterado com sucesso!'
                                 
                 case 'descricao':
-                    pass
+                    nova_descricao = input('Digite a nova descrição: ').strip().title().split(' ')
+                    lista_entradas[indice]['descricao'] = nova_descricao
+                    return f'{campo} alterado com sucesso!'
 
                 case 'categoria':
+                    u.line()
                     listar_categorias()
-                    novaCategoria = int(input('Digite o Id da categoria desta entrada: '))
+                    u.line()
+                    while True:
+                        nova_categoria = int(input('Digite ID da nova categoria: '))
+                        encontrou_id, indice_categoria = u.encontra_id_index(nova_categoria, lista_categorias)
+
+                        if encontrou_id:
+                            lista_entradas[indice]['categoria'] = lista_categorias[indice_categoria]["nome"]
+                            break
+                        else:
+                            continue 
+                    return f'{campo} alterado com sucesso!'
 
                 case 'data':
                     pass
@@ -155,7 +172,7 @@ def menu_entradas():
         print('7 - BUSCA POR PERÍODO')
         print('0 - VOLTAR')
         u.line()
-        opcao = u.ler_opcao(7)
+        opcao = u.ler_opcao_menu(7)
         u.line()
 
         if opcao == 1:

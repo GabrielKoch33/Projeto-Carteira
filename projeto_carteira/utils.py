@@ -5,7 +5,7 @@ from categorias import *
 
 '''funções auxiliares reutilizaveis gerais'''
 
-def ler_opcao(num_max_opcao):
+def ler_opcao_menu(num_max_opcao):
     '''
     ler opção dos menus
     '''
@@ -60,7 +60,7 @@ def converte_moeda(valor):
     
     return valor
 
-def valida_existencia(ref_modulo: str,ref_lista: list)->bool:
+def valida_existencia_campo_nome(ref_modulo: str,ref_lista: list)->bool:
     '''
     percorre a lista para encontrar se existe ou não o campo nome
     usado em: categoria, metas

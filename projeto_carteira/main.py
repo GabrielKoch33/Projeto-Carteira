@@ -25,7 +25,7 @@ def main_menu():
         print('8 - METAS FINANCEIRAS')
         print('0 - SALVAR E SAIR')
         u.line()
-        opcao = u.ler_opcao(8)
+        opcao = u.ler_opcao_menu(8)
         u.line()
         if opcao == 1:
             ent.menu_entradas()

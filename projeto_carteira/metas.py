@@ -28,7 +28,7 @@ def menu_metas():
         print('4 - LISTAR METAS E PORCENTAGEM')
         print('0 - VOLTAR')
         u.line()
-        opcao = u.ler_opcao(4)
+        opcao = u.ler_opcao_menu(4)
         u.line()
         
         if opcao == 1:

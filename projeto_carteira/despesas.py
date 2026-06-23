@@ -38,7 +38,7 @@ def menu_despesa():
         print('7 - BUSCA POR PERÍODO')
         print('0 - VOLTAR')
         u.line()
-        opcao = u.ler_opcao(7)
+        opcao = u.ler_opcao_menu(7)
         u.line()
         
         if opcao == 1:

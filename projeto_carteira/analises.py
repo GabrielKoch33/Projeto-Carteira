@@ -30,7 +30,7 @@ def menu_analises():
         print('5 - TENDÊNCIA DO SALDO')
         print('0 - VOLTAR')
         u.line()
-        opcao = u.ler_opcao(5)
+        opcao = u.ler_opcao_menu(5)
         u.line()
         if opcao == 1:
             u.limpar_tela()
