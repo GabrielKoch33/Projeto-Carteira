@@ -28,24 +28,25 @@ def criar_cat_personalizada():
         else:    
             print('Insira um nome válido (não vazio)!')
             continue       
-
+    # verifica se o nome que o user inserir ja existe na lista de categorias
     if u.valida_existencia_campo_nome(nome_categoria,lista_categorias):
         return 'Essa categoria já existe, duplicadas não são permitidas'
     
     else:
-        lista_categorias.append({"id":u.calcula_id(lista_categorias),
+        lista_categorias.append({"id":u.gera_id(lista_categorias),
                                  "nome":nome_categoria,"default":False})
         
         return 'Categoria adicionada!'
 
 
 def editar_cat_personalizada():
+                   # impede o user de por valores inexistentes, editar cat defaults ou valores inválidos
     id_categoria = u.valida_editar_ou_excluir_categoria(lista_categorias)
-
+                   # retorna o id que o user inseriu 
     if type(id_categoria) == int:
-
-        achou, indice = u.encontra_id_index(id_categoria,lista_categorias)
-        if achou:
+                        # vai usar o valor de id informado para checar se existe essa categoria criada
+        achou, indice = u.encontra_id_e_retorna_index(id_categoria,lista_categorias)
+        if achou:       # ao encontrar, vai retornar a posição de alteração correta    
             novoValor = input('Qual será o novo nome?: ').title()
             lista_categorias[indice]["nome"] = novoValor
             return 'Campo alterado com sucesso!'
@@ -60,8 +61,8 @@ def excluir_cat_personalizada():
     id_categoria = u.valida_editar_ou_excluir_categoria(lista_categorias)
 
     if type(id_categoria) == int:
-        achou, indice = u.encontra_id_index(id_categoria,lista_categorias)
-            # busca um linha que contenha o id indicado, retorna o index dessa linha para remover/alterar
+
+        achou, indice = u.encontra_id_e_retorna_index(id_categoria,lista_categorias)
         if achou:
             lista_categorias.pop(indice)
             return 'Campo removido com sucesso!'

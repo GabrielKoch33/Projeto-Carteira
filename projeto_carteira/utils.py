@@ -3,7 +3,23 @@ import sys
 import time
 from categorias import *
 
-'''funções auxiliares reutilizaveis gerais'''
+def limpar_tela():
+    # Usa o módulo subprocess, recomendado pelas diretrizes atuais do Python
+    if sys.platform.startswith("win"):
+        subprocess.run("cls", shell=True)
+    else:
+        subprocess.run("clear", shell=True)
+
+def pause():
+    time.sleep(1.5)
+        
+def read_key():
+    input("Pressione ENTER para voltar ao menu...")
+
+def line():
+    print('='*30)
+    
+''''''
 
 def ler_opcao_menu(num_max_opcao):
     '''
@@ -24,22 +40,6 @@ def ler_opcao_menu(num_max_opcao):
             else:
                 return op
             
-def limpar_tela():
-    # Usa o módulo subprocess, recomendado pelas diretrizes atuais do Python
-    if sys.platform.startswith("win"):
-        subprocess.run("cls", shell=True)
-    else:
-        subprocess.run("clear", shell=True)
-
-def pause():
-    time.sleep(1.5)
-        
-def read_key():
-    input("Pressione ENTER para voltar ao menu...")
-
-def line():
-    print('='*30)
-    
 def converte_moeda(valor):
     '''
     Aprender Try/Except e revisar essa função
@@ -70,21 +70,7 @@ def valida_existencia_campo_nome(ref_modulo: str,ref_lista: list)->bool:
             return True
     return False
                 
-def encontra_id_index(ref_id,ref_lista):
-    '''
-    # mesmo que o user informe um valor absurdo (ex:30) ele vai rodar,
-    # pode até ocorrer de id após o 10 ser 30, mas outros 19 foram removidos
-    # mas mesmo assim ele compara os id's e retorna caso esse id exista
-    Usar enumarate em um fatiamento de listas [i:f]
-    funciona de forma que a contagem do index do enumerate comece em 0, não na posição de inicio do corte
-    '''
-    for index,item in enumerate(ref_lista): 
-         if item['id'] == ref_id:
-            return True, index
-          
-    return False, 1000 # não encontrou o id
-
-def calcula_id(lista):
+def gera_id(lista):
     '''
     acessa uma lista, se for vazia retorna id 1 para o 1º elemento, senão encontra o maior nº id e + 1
     '''
@@ -114,7 +100,7 @@ def valida_editar_ou_excluir_categoria(lista):
         listar_categorias()
         while True:
             try:
-                id_informado = int(input('Digite o ID da entrada que deseja alterar ou excluir: '))
+                id_informado = int(input('Digite o ID da categoria que deseja alterar ou excluir: '))
 
             except:
                 print('Escolha uma opção (numérica) válida!')
@@ -123,7 +109,31 @@ def valida_editar_ou_excluir_categoria(lista):
             if id_informado <= 10:
                 return 'Categorias padrões do sistema não são editáveis/removíveis'
             else:
-                return id_informado #quando a entrada for validada e não der erro, saia do loop while true
-        
-       
-        
+                return id_informado #quando a entrada for validada e não der erro, retorna o id da categoria que o user quer usar
+
+def encontra_id_e_retorna_index(ref_id,ref_lista):
+    '''
+    # mesmo que o user informe um valor absurdo (ex:30) ele vai rodar,
+    # pode até ocorrer de id após o 10 ser 30, mas outros 19 foram removidos
+    # mas mesmo assim ele compara os id's e retorna caso esse id exista
+    Usar enumarate em um fatiamento de listas [i:f]
+    funciona de forma que a contagem do index do enumerate comece em 0, não na posição de inicio do corte
+    '''
+    for index,item in enumerate(ref_lista): 
+         if item['id'] == ref_id:
+            return True, index
+          
+    return False, 1000 # não encontrou o id
+   
+def ler_valida_id ():
+    ''' faz a validação de id'''
+    while True: # valida entrada valida de valores
+        try:
+            id_entrada = int(input('Digite o ID: '))
+
+        except:
+            print('Escolha uma opção (numérica) válida!')
+            continue # roda esse try até que uma entrada válida seja informada
+
+        else:
+            return id_entrada

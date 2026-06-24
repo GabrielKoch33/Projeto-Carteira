@@ -37,7 +37,7 @@ def adicionar_entradas():
         u.line()
         categoria_index = int(input('Digite o ID da categoria desta entrada: '))
     
-        lista_entradas.append({"id":u.calcula_id(lista_entradas),
+        lista_entradas.append({"id":u.gera_id(lista_entradas),
                             "valor":valor_entrada,
                             "descricao":descricao_entrada,
                             "categoria":lista_categorias[categoria_index-1]["nome"],
@@ -49,35 +49,29 @@ def adicionar_entradas():
     
 def editar_entradas():
 
-    if lista_entradas:
+    if lista_entradas: #se conter logs de entrada, da inicio ao processo
         listar_entradas()
-        u.line()
 
-        while True:
-            try:
-                id_entrada = int(input('Digite o ID da entrada que deseja alterar: '))
+        id_entrada = u.ler_valida_id() #while true e try/except para ler id informado
 
-            except:
-                print('Escolha uma opção (numérica) válida!')
-                continue # roda esse try até que uma entrada válida seja informada
-
-            else:
-                break #quando a entrada for validada e não der erro, saia do loop while true
-
-        achou, indice = u.encontra_id_index(id_entrada, lista_entradas)
-
+        achou, indice = u.encontra_id_e_retorna_index(id_entrada, lista_entradas)
+                        # verifica se o id informado pelo user existe e se existir retorna sua posição
+                        # indice será usado para sabermos onde o id informado está 
         if not achou:
             return 'Entrada não encontrada ou cadastrada!'
                 
         else:
-            campo = input('Qual campo dessa entrada você deseja editar?: ').lower().strip()
-
+            print('Qual campo dessa entrada você deseja editar? ')
+            u.line()
+            while True:
+                campo = input(f'[1] - VALOR\n[2] - DESCRIÇÃO\n[3] - CATEGORIA\n[4] - DATA\nR: ').strip()
+                if campo not in ('1234'):
+                    continue
+                else:
+                    break
             match campo:
-
-                case 'id': 
-                    return('Não é permitido alterar o campo ID')
-                        
-                case 'valor':
+                case '1':
+                    u.line()
                     novo_valor = input('Digite o novo valor em R$ da entrada: ')
                     novo_valor = u.converte_moeda(novo_valor)
 
@@ -85,36 +79,45 @@ def editar_entradas():
                         return novo_valor
                     else:
                         lista_entradas[indice]["valor"] = novo_valor
-                        return f'{campo} alterado com sucesso!'
-                                
-                case 'descricao':
+                        return 'Campo "VALOR" alterado com sucesso!'
+                                    
+                case '2':
+                    u.line()
                     nova_descricao = input('Digite a nova descrição: ').strip().title().split(' ')
-                    lista_entradas[indice]['descricao'] = nova_descricao
-                    return f'{campo} alterado com sucesso!'
+                    lista_entradas[indice]['descricao'] = nova_descricao                        
+                    return 'Campo "DESCRIÇÃO" alterado com sucesso!'
 
-                case 'categoria':
+                case '3':
                     u.line()
                     listar_categorias()
-                    u.line()
                     while True:
-                        nova_categoria = int(input('Digite ID da nova categoria: '))
-                        encontrou_id, indice_categoria = u.encontra_id_index(nova_categoria, lista_categorias)
+                        id_nova_categoria = u.ler_valida_id()                           
+                        encontrou_id, indice_categoria = u.encontra_id_e_retorna_index(id_nova_categoria, lista_categorias)
 
                         if encontrou_id:
-                            lista_entradas[indice]['categoria'] = lista_categorias[indice_categoria]["nome"]
-                            break
+                            lista_entradas[indice]['categoria'] = lista_categorias[indice_categoria]['nome']
+                            return 'Campo "CATEGORIA" alterado com sucesso!'
                         else:
-                            continue 
-                    return f'{campo} alterado com sucesso!'
+                            print('Tente novamente!')
+                            continue
 
-                case 'data':
-                    pass
+                case '4':
+                    u.line()
+                    while True:
+                        data = u.converte_data()
+
+                        if data[0] == 'E':
+                            u.line()
+                            print(data)
+                            u.line()
+                            continue # se voltar erro, pede data novamente
+                        else:                                break # senão, valor é válido e insere data
+                    lista_entradas[indice]['data'] = data
+                    return 'Campo "DATA" alterado com sucesso!'
 
                 case _: # _ é como se fosse um 'ELSE'. usar | (barra reta) é como um OR
-                   return('Insira um campo válido ou remova os acentos (~,ç,etc)')
-                    
-                    
-            
+                    u.line()
+                    return('Insira um campo válido!')      
     else:
         return('Nenhuma entrada foi registrada ainda! Nada para editar')
         
@@ -124,7 +127,6 @@ def remover_entradas():
     listar_entradas()
 
     return 'INCOMPLETO'
-
 
 def listar_entradas():
 
