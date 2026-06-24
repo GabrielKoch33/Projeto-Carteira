@@ -4,7 +4,7 @@
 
 O Dashboard de Gastos Pessoais é um sistema desenvolvido em Python para auxiliar no controle financeiro pessoal. O projeto permite registrar receitas e despesas, organizar gastos por categorias, armazenar informações de forma persistente e gerar relatórios para acompanhamento financeiro.
 
-Além de servir como uma ferramenta de gestão financeira, o projeto tem como objetivo consolidar conhecimentos de programação, estrutura de dados, modularização, persistência de dados e análise de informações, criando uma base sólida para futuras aplicações em Engenharia e Ciência de Dados.
+Além de servir como uma ferramenta de gestão financeira, o projeto tem como objetivo consolidar conhecimentos de programação, estrutura de dados, modularização, persistência de dados e análise de informações.
 
 ---
 
