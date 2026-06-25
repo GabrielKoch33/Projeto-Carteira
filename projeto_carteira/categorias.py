@@ -78,7 +78,7 @@ def menu_categorias():
     while True:
         u.limpar_tela()
         u.line()
-        print('CATEGORIAS'.center(30,' '))
+        print('CATEGORIAS'.center(60,' '))
         u.line()
         print('1 - LISTAR CATEGORIAS')
         print('2 - CRIAR CATEGORIA PERSONALIZADA')

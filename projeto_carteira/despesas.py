@@ -27,7 +27,7 @@ def menu_despesa():
     while True:
         u.limpar_tela()
         u.line()
-        print('DESPESAS'.center(30,' '))
+        print('DESPESAS'.center(60,' '))
         u.line()
         print('1 - ADICIONAR DESPESA')
         print('2 - EDITAR DESPESA')
@@ -75,12 +75,3 @@ def menu_despesa():
 
 if __name__ == '__main__':
     menu_despesa()
-'''
-{
-    "id": 1,
-    "descricao": "Mercado",
-    "valor": 250.00,
-    "categoria": "Alimentação",
-    "data": "2026-06-10"
-}
-'''

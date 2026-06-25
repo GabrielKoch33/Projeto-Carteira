@@ -21,7 +21,7 @@ def menu_estatisticas():
     while True:
         u.limpar_tela()
         u.line()
-        print('ESTATÍSTICAS'.center(30,' '))
+        print('ESTATÍSTICAS'.center(60,' '))
         u.line()
         print('1 - MÉDIA DE GASTOS')
         print('2 - MAIOR E MENOR DESPESA')

@@ -17,7 +17,7 @@ def read_key():
     input("Pressione ENTER para voltar ao menu...")
 
 def line():
-    print('='*30)
+    print('='*60)
     
 ''''''
 
@@ -60,13 +60,13 @@ def converte_moeda(valor):
     
     return valor
 
-def valida_existencia_campo_nome(ref_modulo: str,ref_lista: list)->bool:
+def valida_existencia_campo_nome(ref_nome_categoria_user: str,ref_lista: list)->bool:
     '''
     percorre a lista para encontrar se existe ou não o campo nome
     usado em: categoria, metas
     '''
     for item in ref_lista:
-        if item['nome'] == ref_modulo:
+        if item['nome'] == ref_nome_categoria_user:
             return True
     return False
                 

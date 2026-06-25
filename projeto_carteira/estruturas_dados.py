@@ -12,11 +12,23 @@ lista_categorias = [
 ]
 
 lista_entradas =[
-#  {"id": 1, "valor": float, "descricao": list,"categoria": str,"data":str},
+    # {
+    #     "id": 2,
+    #     "valor": 120.50,
+    #     "descricao": ["mercado", "mensal"],
+    #     "categoria": "Alimentação",
+    #     "data": "06/06/2026"
+    # },
+    # {
+    #     "id": 7,
+    #     "valor": 300.00,
+    #     "descricao": ["mercado", "churrasco"],
+    #     "categoria": "Alimentação",
+    #     "data": "11/06/2026"
+    # }
 ]
 
 palavras_desc_entradas ={
-    "compra": [1,4,7,9,]
-    #palavra: [lista de id de entradas onde essa palavra aparece]
+    # "mercado": {2, 7},
 }
 

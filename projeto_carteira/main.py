@@ -13,7 +13,7 @@ def main_menu():
     while True:
         u.limpar_tela()
         u.line()
-        print('CARTEIRA DE GABRIEL'.center(30,' '))
+        print('CARTEIRA DE GABRIEL'.center(60,' '))
         u.line()
         print('1 - ENTRADAS')
         print('2 - DESPESAS')
