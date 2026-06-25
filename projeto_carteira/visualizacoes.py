@@ -18,7 +18,7 @@ def menu_visualizacoes():
     while True:
         u.limpar_tela()
         u.line()
-        print('VISUALIZAÇÕES & GRÁFICOS'.center(60,' '))
+        print('VISUALIZAÇÕES & GRÁFICOS'.center(u.size,' '))
         u.line()
         print('1 - PIZZA POR CATEGORIA')
         print('2 - BARRAS POR CATEGORIA')

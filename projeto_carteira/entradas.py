@@ -16,7 +16,14 @@ def adicionar_entradas():
     
     else: 
         # descrição será uma lista, assim podemos procurar por plavras chaves
-        descricao_entrada = input('Insira uma descrição para a entrada: ').strip().lower().split(' ')
+        while True:
+            descricao_entrada = input('Insira uma descrição para a entrada: ').strip().lower()
+            if not descricao_entrada:
+                print('Tente novamente!')
+            else:
+                descricao_entrada = descricao_entrada.split(' ')
+                break
+
 
         while True:
             data = u.converte_data()
@@ -35,8 +42,8 @@ def adicionar_entradas():
         u.line()
         while True:
             # Parte responsável por permitir entrada válida de ID de categoria
-            categoria_index = u.ler_valida_id()
-            achou, indice_categoria = u.encontra_id_e_retorna_index(categoria_index, est.lista_categorias)
+            id_entrada = u.ler_valida_id()
+            achou, indice_categoria = u.encontra_id_e_retorna_index(id_entrada, est.lista_categorias)
 
             if achou:
                 id = u.gera_id(est.lista_entradas)# depois que tudo dá certo é gerado um ID
@@ -68,16 +75,21 @@ def listar_entradas():
         return 'Registro de entradas vazio. Nenhuma entrada para listar!'
     
     else:
-        print(f'{"ID":<5}{"VALOR":<10}{"DESCRIÇÃO":<20}{"CATEGORIA":<15}{"DATA":<10}')
-        print("-" * 60)
+        print('='* u.size)
+        print('LISTA DE ENTRADAS'.center(u.size,' '))
+        print('='* u.size)
+        print(f'{"ID":<5}{"VALOR":<15}{"DESCRIÇÃO":<30}{"CATEGORIA":<20}{"DATA":<12}')
+        print("-" * u.size)
         for item in est.lista_entradas:
+           descricao = ' '.join(item['descricao'])
            print(
             f'{item["id"]:<5}'
-            f'{item["valor"]:<10.2f}'#.2f = duas casas decimais
-            f'{' '.join(item["descricao"]):<20}'
-            f'{item["categoria"]:<15}'
-            f'{item["data"]:<10}'#Alinha para ESQUERDA e reserva 20 espaços
+            f'R${item["valor"]:<13.2f}'#.2f = duas casas decimais
+            f"{descricao:<30}"
+            f'{item["categoria"]:<20}'
+            f'{item["data"]:<12}'
             )
+           
         u.line()  
         return 'Lista retornada com sucesso!'
     
@@ -121,7 +133,23 @@ def editar_entradas():
                                     
                 case '2':
                     u.line()
-                    nova_descricao = input('Digite a nova descrição: ').strip().title().split(' ')
+                    nova_descricao = input('Digite a nova descrição: ').strip().lower().split(' ')
+                    # antiga = oi meu amor id = 1 // nova = eae mano
+                    if nova_descricao == est.lista_entradas[indice_log_editar]['descricao']:
+                        return 'Campo "DESCRIÇÃO" alterado com sucesso!'
+                    else:
+                        # loop para remover os indices antigos ligados a palavra
+                        for item in est.lista_entradas[indice_log_editar]['descricao']:
+                            est.palavras_desc_entradas[item].discard(id_entrada)
+                            if not est.palavras_desc_entradas[item]:
+                                del est.palavras_desc_entradas[item] 
+                        
+                        # loop para criar a hash das palavras da nova descrição
+                        for item in nova_descricao:
+                            if item not in est.palavras_desc_entradas:
+                                est.palavras_desc_entradas[item] = set()
+                                est.palavras_desc_entradas[item].add(id_entrada)
+                            
                     est.lista_entradas[indice_log_editar]['descricao'] = nova_descricao                        
                     return 'Campo "DESCRIÇÃO" alterado com sucesso!'
 
@@ -179,8 +207,7 @@ def remover_entradas():
 
             for item in est.lista_entradas[indice_log_remover]['descricao']:
                 est.palavras_desc_entradas[item].discard(id_removido)
-                # discard
-
+                
                 if not est.palavras_desc_entradas[item]: # se o set ficou vazio (a palavra (key) so aparecia nesse log) então exclui a key
                     del est.palavras_desc_entradas[item]
 
@@ -192,33 +219,74 @@ def remover_entradas():
 
 def buscar_por_descricao():
 
-    palavra_chave = input('Insira uma palavra-chave para a busca: ').strip().lower()
+    if u.lista_categorias:
 
-    if palavra_chave not in est.palavras_desc_entradas:
-        return ('Nenhuma descrição com essa palavra-chave foi encontrada!')
+        while True:
+            palavra_chave_busca = input('Insira uma palavra-chave para a busca: ').strip().lower()
+            if not palavra_chave_busca:
+                print('Tente novamente!')
+            else:
+                break
+
+        if palavra_chave_busca not in est.palavras_desc_entradas:
+            return ('Nenhuma descrição com essa palavra-chave foi encontrada!')
+        else:
+            ids_encontrados = est.palavras_desc_entradas[palavra_chave_busca] #recebe os id das entradas da respectiva palavra chave
+
+            print('='* u.size)
+            print('LISTA DE ENTRADAS'.center(u.size,' '))
+            print('='* u.size)
+            print(f'{"ID":<5}{"VALOR":<15}{"DESCRIÇÃO":<30}{"CATEGORIA":<20}{"DATA":<12}')
+            print("-" * u.size)
+
+            for item in est.lista_entradas: #percorre a lista de entradas comparando [id] com os id relacionados a palavra-chave
+                if item['id'] in ids_encontrados:
+                    descricao = ' '.join(item['descricao'])
+                    print(
+                        f'{item["id"]:<5}'
+                        f'R${item["valor"]:<13.2f}'
+                        f'{descricao:<30}'
+                        f'{item["categoria"]:<20}'
+                        f'{item["data"]:<12}'
+                    )
+
+            u.line()
+            return ('Consulta por descrição retornada com sucesso!')
     else:
-        ids_encontrados = est.palavras_desc_entradas[palavra_chave] #recebe os id das entradas da respectiva palavra chave
-
-        print(f'{"ID":<5}{"VALOR":<10}{"DESCRIÇÃO":<20}{"CATEGORIA":<15}{"DATA":<10}')
-        print("-" * 60)
-
-        for item in est.lista_entradas: #percorre a lista de entradas comparando [id] com os id relacionados a palavra-chave
-            if item['id'] in ids_encontrados:
-                print(
-                    f'{item["id"]:<5}'
-                    f'{item["valor"]:<10.2f}'
-                    f'{" ".join(item["descricao"]):<20}'
-                    f'{item["categoria"]:<15}'
-                    f'{item["data"]:<10}'
-                )
-
-        u.line()
-        return ('Consulta por descrição retornada com sucesso!')
-
+        return('Nenhuma entrada foi registrada ainda! Nada para consultar!')
 
 def buscar_por_categoria():
-    u.read_key()
-    pass
+    
+    if u.lista_categorias:
+
+        palavra_chave_busca = input('Insira uma palavra-chave para a busca: ').strip().lower()
+
+        if palavra_chave_busca not in est.palavras_desc_entradas:
+            return ('Nenhuma descrição com essa palavra-chave foi encontrada!')
+        else:
+            ids_encontrados = est.palavras_desc_entradas[palavra_chave_busca] #recebe os id das entradas da respectiva palavra chave
+
+            print('='* u.size)
+            print('LISTA DE ENTRADAS'.center(u.size,' '))
+            print('='* u.size)
+            print(f'{"ID":<5}{"VALOR":<15}{"DESCRIÇÃO":<30}{"CATEGORIA":<20}{"DATA":<12}')
+            print("-" * u.size)
+
+            for item in est.lista_entradas: #percorre a lista de entradas comparando [id] com os id relacionados a palavra-chave
+                if item['id'] in ids_encontrados:
+                    descricao = ' '.join(item['descricao'])
+                    print(
+                        f'{item["id"]:<5}'
+                        f'R${item["valor"]:<10.2f}'
+                        f'{descricao:<20}'
+                        f'{item["categoria"]:<15}'
+                        f'{item["data"]:<10}'
+                    )
+
+            u.line()
+            return ('Consulta por descrição retornada com sucesso!')
+    else:
+        return('Nenhuma entrada foi registrada ainda! Nada para consultar!')
 
 def buscar_por_periodo():
     u.read_key()
@@ -228,7 +296,7 @@ def menu_entradas():
     while True:
         u.limpar_tela()
         u.line()
-        print('ENTRADAS'.center(60,' '))
+        print('ENTRADAS'.center(u.size,' '))
         u.line()
         print('1 - ADICIONAR ENTRADA')
         print('2 - EDITAR ENTRADA')

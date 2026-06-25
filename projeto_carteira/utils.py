@@ -3,6 +3,8 @@ import sys
 import time
 from categorias import *
 
+size = 82
+
 def limpar_tela():
     # Usa o módulo subprocess, recomendado pelas diretrizes atuais do Python
     if sys.platform.startswith("win"):
@@ -17,9 +19,11 @@ def read_key():
     input("Pressione ENTER para voltar ao menu...")
 
 def line():
-    print('='*60)
+    print('='*size)
     
 ''''''
+def calcula_saldo():
+    pass
 
 def ler_opcao_menu(num_max_opcao):
     '''

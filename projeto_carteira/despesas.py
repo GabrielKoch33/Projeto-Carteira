@@ -10,6 +10,10 @@ def remover_despesa():
     u.read_key()
     pass
 def listar_despesa():
+    # print('='* u.size)
+    # print('LISTA DE DESPESAS'.center(u.size,' '))
+    # print('='* u.size)
+
     u.read_key()
     pass
 def buscar_por_descricao():
@@ -27,7 +31,7 @@ def menu_despesa():
     while True:
         u.limpar_tela()
         u.line()
-        print('DESPESAS'.center(60,' '))
+        print('DESPESAS'.center(u.size,' '))
         u.line()
         print('1 - ADICIONAR DESPESA')
         print('2 - EDITAR DESPESA')

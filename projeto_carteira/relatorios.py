@@ -27,7 +27,7 @@ def menu_relatorio():
     while True:
         u.limpar_tela()
         u.line()
-        print('RELATÓRIOS'.center(60,' '))
+        print('RELATÓRIOS'.center(u.size,' '))
         u.line()
         print('1 - SALDO ATUAL')
         print('2 - TOTAL DE ENTRADAS')

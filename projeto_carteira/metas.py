@@ -20,7 +20,7 @@ def menu_metas():
     while True:
         u.limpar_tela()
         u.line()
-        print('METAS'.center(60,' '))
+        print('METAS'.center(u.size,' '))
         u.line()
         print('1 - CRIAR META')
         print('2 - EDITAR META')

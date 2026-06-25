@@ -21,7 +21,7 @@ def menu_analises():
     while True:
         u.limpar_tela()
         u.line()
-        print('ANÁLISES DO USUÁRIO'.center(60,' '))
+        print('ANÁLISES DO USUÁRIO'.center(u.size,' '))
         u.line()
         print('1 - CATEGORIA QUE MAIS CONSOME ')
         print('2 - MÊS COM MAIOR GASTO')

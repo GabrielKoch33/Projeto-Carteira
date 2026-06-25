@@ -6,8 +6,11 @@ aprender isInstance()
 '''
 
 def listar_categorias():
+    print('='* u.size)
+    print('LISTA DE CATEGORIAS'.center(u.size,' '))
+    print('='* u.size)
     print(f'{'ID':<5}{'CATEGORIA':<10}')
-    
+    print('-'*u.size)
     for categoria in lista_categorias:
         print(f'{categoria["id"]:<5}{categoria["nome"]:<10}')
 
@@ -23,7 +26,7 @@ def criar_cat_personalizada():
         nome_categoria = input('Digite o nome da nova categoria: ').strip()
 
         if nome_categoria: 
-            nome_categoria = nome_categoria.title()
+            nome_categoria = nome_categoria.lower()
             break
         else:    
             print('Insira um nome válido (não vazio)!')
@@ -47,7 +50,7 @@ def editar_cat_personalizada():
                         # vai usar o valor de id informado para checar se existe essa categoria criada
         achou, indice = u.encontra_id_e_retorna_index(id_categoria,lista_categorias)
         if achou:       # ao encontrar, vai retornar a posição de alteração correta    
-            novoValor = input('Qual será o novo nome?: ').title()
+            novoValor = input('Qual será o novo nome?: ').lower()
             lista_categorias[indice]["nome"] = novoValor
             return 'Campo alterado com sucesso!'
 
@@ -78,7 +81,7 @@ def menu_categorias():
     while True:
         u.limpar_tela()
         u.line()
-        print('CATEGORIAS'.center(60,' '))
+        print('CATEGORIAS'.center(u.size,' '))
         u.line()
         print('1 - LISTAR CATEGORIAS')
         print('2 - CRIAR CATEGORIA PERSONALIZADA')
@@ -92,6 +95,7 @@ def menu_categorias():
         if opcao == 1:
             u.limpar_tela()
             listar_categorias()
+            u.line()
             u.read_key()
 
         elif opcao == 2:
