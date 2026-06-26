@@ -26,9 +26,9 @@ def relatorio_anual():
 def menu_relatorio():
     while True:
         u.limpar_tela()
-        u.line()
+        u.double_line()
         print('RELATÓRIOS'.center(u.size,' '))
-        u.line()
+        u.double_line()
         print('1 - SALDO ATUAL')
         print('2 - TOTAL DE ENTRADAS')
         print('3 - TOTAL DE DESPESAS')
@@ -37,9 +37,9 @@ def menu_relatorio():
         print('6 - RELATÓRIO MENSAL')
         print('7 - RELATÓRIO ANUAL')
         print('0 - VOLTAR')
-        u.line()
+        u.double_line()
         opcao = u.ler_opcao_menu(7)
-        u.line()
+        u.double_line()
         
         if opcao == 1:
             u.limpar_tela()

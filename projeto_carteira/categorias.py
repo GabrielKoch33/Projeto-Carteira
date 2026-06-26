@@ -6,11 +6,11 @@ aprender isInstance()
 '''
 
 def listar_categorias():
-    print('='* u.size)
+    u.double_line()
     print('LISTA DE CATEGORIAS'.center(u.size,' '))
-    print('='* u.size)
+    u.double_line()
     print(f'{'ID':<5}{'CATEGORIA':<10}')
-    print('-'*u.size)
+    u.line()
     for categoria in lista_categorias:
         print(f'{categoria["id"]:<5}{categoria["nome"]:<10}')
 
@@ -80,43 +80,43 @@ def excluir_cat_personalizada():
 def menu_categorias():
     while True:
         u.limpar_tela()
-        u.line()
+        u.double_line()
         print('CATEGORIAS'.center(u.size,' '))
-        u.line()
+        u.double_line()
         print('1 - LISTAR CATEGORIAS')
         print('2 - CRIAR CATEGORIA PERSONALIZADA')
         print('3 - EDITAR CATEGORIA PERSONALIZADA')
         print('4 - EXCLUIR CATEGORIA PERSONALIZADA')
         print('0 - VOLTAR')
-        u.line()
+        u.double_line()
         opcao = u.ler_opcao_menu(4)
-        u.line()
+        u.double_line()
         
         if opcao == 1:
             u.limpar_tela()
             listar_categorias()
-            u.line()
+            u.double_line()
             u.read_key()
 
         elif opcao == 2:
             u.limpar_tela()
             msg = criar_cat_personalizada()
             print(msg)
-            u.line()
+            u.double_line()
             u.read_key()
 
         elif opcao == 3:
             u.limpar_tela()
             msg = editar_cat_personalizada()
             print(msg)
-            u.line()
+            u.double_line()
             u.read_key()
 
         elif opcao == 4:
             u.limpar_tela()
             msg = excluir_cat_personalizada()
             print(msg)
-            u.line()
+            u.double_line()
             u.read_key()
 
         elif opcao == 0:

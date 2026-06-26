@@ -16,14 +16,14 @@ lista_entradas =[
         "id": 2,
         "valor": 120.50,
         "descricao": ["mercado", "mensal"],
-        "categoria": "Alimentação",
+        "categoria": "alimentação",
         "data": "06/06/2026"
     },
     {
         "id": 7,
         "valor": 300.00,
         "descricao": ["mercado", "churrasco"],
-        "categoria": "Alimentação",
+        "categoria": "alimentação",
         "data": "11/06/2026"
     }
 ]

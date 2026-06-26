@@ -12,9 +12,9 @@ import utils as u
 def main_menu():
     while True:
         u.limpar_tela()
-        u.line()
+        u.double_line()
         print('CARTEIRA DE GABRIEL'.center(u.size,' '))
-        u.line()
+        u.double_line()
         print('1 - ENTRADAS')
         print('2 - DESPESAS')
         print('3 - CATEGORIAS')
@@ -24,9 +24,9 @@ def main_menu():
         print('7 - ANÁLISES AUTOMÁTICAS')
         print('8 - METAS FINANCEIRAS')
         print('0 - SALVAR E SAIR')
-        u.line()
+        u.double_line()
         opcao = u.ler_opcao_menu(8)
-        u.line()
+        u.double_line()
         if opcao == 1:
             ent.menu_entradas()
         elif opcao == 2:

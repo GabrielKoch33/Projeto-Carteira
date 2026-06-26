@@ -20,18 +20,18 @@ def percentual_categoria():
 def menu_estatisticas():
     while True:
         u.limpar_tela()
-        u.line()
+        u.double_line()
         print('ESTATÍSTICAS'.center(u.size,' '))
-        u.line()
+        u.double_line()
         print('1 - MÉDIA DE GASTOS')
         print('2 - MAIOR E MENOR DESPESA')
         print('3 - MAIOR E MENOR ENTRADA')
         print('4 - DESVIO PADRÃO')
         print('5 - PERCENTUAL POR CATEGORIA')
         print('0 - VOLTAR')
-        u.line()
+        u.double_line()
         opcao = u.ler_opcao_menu(5)
-        u.line()
+        u.double_line()
         
         if opcao == 1:
             media_gastos()

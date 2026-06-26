@@ -18,9 +18,11 @@ def pause():
 def read_key():
     input("Pressione ENTER para voltar ao menu...")
 
-def line():
+def double_line():
     print('='*size)
     
+def line():
+    print('-'*size)
 ''''''
 def calcula_saldo():
     pass

@@ -30,9 +30,9 @@ def buscar_por_periodo():
 def menu_despesa():
     while True:
         u.limpar_tela()
-        u.line()
+        u.double_line()
         print('DESPESAS'.center(u.size,' '))
-        u.line()
+        u.double_line()
         print('1 - ADICIONAR DESPESA')
         print('2 - EDITAR DESPESA')
         print('3 - REMOVER DESPESA')
@@ -41,9 +41,9 @@ def menu_despesa():
         print('6 - BUSCA POR CATEGORIA')
         print('7 - BUSCA POR PERÍODO')
         print('0 - VOLTAR')
-        u.line()
+        u.double_line()
         opcao = u.ler_opcao_menu(7)
-        u.line()
+        u.double_line()
         
         if opcao == 1:
             u.limpar_tela()

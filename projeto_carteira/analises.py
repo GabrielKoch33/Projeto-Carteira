@@ -20,18 +20,18 @@ def tendencia_saldo():
 def menu_analises():
     while True:
         u.limpar_tela()
-        u.line()
+        u.double_line()
         print('ANÁLISES DO USUÁRIO'.center(u.size,' '))
-        u.line()
+        u.double_line()
         print('1 - CATEGORIA QUE MAIS CONSOME ')
         print('2 - MÊS COM MAIOR GASTO')
         print('3 - MÊS COM MENOR GASTO')
         print('4 - TAXA MÉDIA DE ECONOMIA')
         print('5 - TENDÊNCIA DO SALDO')
         print('0 - VOLTAR')
-        u.line()
+        u.double_line()
         opcao = u.ler_opcao_menu(5)
-        u.line()
+        u.double_line()
         if opcao == 1:
             u.limpar_tela()
             categoria_maior_consumo()

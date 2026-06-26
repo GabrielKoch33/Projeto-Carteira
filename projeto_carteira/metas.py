@@ -19,17 +19,17 @@ def listar_metas_and_porcent():
 def menu_metas():
     while True:
         u.limpar_tela()
-        u.line()
+        u.double_line()
         print('METAS'.center(u.size,' '))
-        u.line()
+        u.double_line()
         print('1 - CRIAR META')
         print('2 - EDITAR META')
         print('3 - EXCLUIR META')
         print('4 - LISTAR METAS E PORCENTAGEM')
         print('0 - VOLTAR')
-        u.line()
+        u.double_line()
         opcao = u.ler_opcao_menu(4)
-        u.line()
+        u.double_line()
         
         if opcao == 1:
             u.limpar_tela()
