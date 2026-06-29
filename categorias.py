@@ -1,5 +1,5 @@
 import utils as u
-from estruturas_dados import lista_categorias
+import estruturas_dados as est
 
 '''
 aprender isInstance()
@@ -11,7 +11,7 @@ def listar_categorias():
     u.double_line()
     print(f'{'ID':<5}{'CATEGORIA':<10}')
     u.line()
-    for categoria in lista_categorias:
+    for categoria in est.lista_categorias:
         print(f'{categoria["id"]:<5}{categoria["nome"]:<10}')
 
    
@@ -32,11 +32,11 @@ def criar_cat_personalizada():
             print('Insira um nome válido (não vazio)!')
             continue       
     # verifica se o nome que o user inserir ja existe na lista de categorias
-    if u.valida_existencia_campo_nome(nome_categoria,lista_categorias):
-        return 'Essa categoria já existe, duplicadas não são permitidas'
+    if u.encontra_campo_e_indice(nome_categoria,est.lista_categorias,'nome'):
+        return 'Essa categoria já existe, duplicadas não são permitidas!'
     
     else:
-        lista_categorias.append({"id":u.gera_id(lista_categorias),
+        est.lista_categorias.append({"id":u.gera_id(est.lista_categorias),
                                  "nome":nome_categoria,"default":False})
         
         return 'Categoria adicionada!'
@@ -44,14 +44,14 @@ def criar_cat_personalizada():
 
 def editar_cat_personalizada():
                    # impede o user de por valores inexistentes, editar cat defaults ou valores inválidos
-    id_categoria = u.valida_editar_ou_excluir_categoria(lista_categorias)
+    id_categoria = u.valida_editar_ou_excluir_categoria(est.lista_categorias)
                    # retorna o id que o user inseriu 
     if type(id_categoria) == int:
                         # vai usar o valor de id informado para checar se existe essa categoria criada
-        achou, indice = u.encontra_id_e_retorna_index(id_categoria,lista_categorias)
+        achou, indice = u.encontra_campo_e_indice(id_categoria,est.lista_categorias,'id')
         if achou:       # ao encontrar, vai retornar a posição de alteração correta    
             novoValor = input('Qual será o novo nome?: ').lower()
-            lista_categorias[indice]["nome"] = novoValor
+            est.lista_categorias[indice]["nome"] = novoValor
             return 'Campo alterado com sucesso!'
 
         else:
@@ -61,13 +61,13 @@ def editar_cat_personalizada():
         return id_categoria
 
 def excluir_cat_personalizada():
-    id_categoria = u.valida_editar_ou_excluir_categoria(lista_categorias)
+    id_categoria = u.valida_editar_ou_excluir_categoria(est.lista_categorias)
 
     if type(id_categoria) == int:
 
-        achou, indice = u.encontra_id_e_retorna_index(id_categoria,lista_categorias)
+        achou, indice = u.encontra_campo_e_indice(id_categoria,est.lista_categorias,'id')
         if achou:
-            lista_categorias.pop(indice)
+            est.lista_categorias.pop(indice)
             return 'Campo removido com sucesso!'
             
         else:

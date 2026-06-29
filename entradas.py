@@ -33,13 +33,13 @@ def adicionar_entradas():
             else:
                 break # senão, valor válido e insere data
 
-
         listar_categorias()
         u.double_line()
+
         while True:
             # Parte responsável por permitir entrada válida de ID de categoria
             id_entrada = u.ler_valida_id()
-            achou, indice_categoria = u.encontra_id_e_retorna_index(id_entrada, est.lista_categorias)
+            achou, indice = u.encontra_campo_e_indice(id_entrada, est.lista_categorias,'id')
 
             if achou:
                 id = u.gera_id(est.lista_entradas)# depois que tudo dá certo é gerado um ID
@@ -55,7 +55,7 @@ def adicionar_entradas():
                 est.lista_entradas.append({"id":id,
                                     "valor":valor_entrada,
                                     "descricao":descricao_entrada,
-                                    "categoria":est.lista_categorias[indice_categoria]["nome"],
+                                    "categoria":est.lista_categorias[indice]["nome"],
                                     "data":data})
                 break
 
@@ -95,8 +95,7 @@ def editar_entradas():
         listar_entradas()
 
         id_entrada = u.ler_valida_id() #while true e try/except para ler id informado
-
-        achou, indice_log_editar = u.encontra_id_e_retorna_index(id_entrada, est.lista_entradas)
+        achou, indice = u.encontra_campo_e_indice(id_entrada,est.lista_entradas,'id')
                         # verifica se o id informado pelo user existe e se existir retorna sua posição
                         # indice será usado para sabermos onde o id informado está 
         if not achou:
@@ -124,18 +123,18 @@ def editar_entradas():
                     if type(novo_valor) == str:
                         return novo_valor
                     else:
-                        est.lista_entradas[indice_log_editar]["valor"] = novo_valor
+                        est.lista_entradas[indice]["valor"] = novo_valor
                         return 'Campo "VALOR" alterado com sucesso!'
                                     
                 case '2':
                     u.double_line()
                     nova_descricao = input('Digite a nova descrição: ').strip().lower().split(' ')
                     # antiga = oi meu amor id = 1 // nova = eae mano
-                    if nova_descricao == est.lista_entradas[indice_log_editar]['descricao']:
+                    if nova_descricao == est.lista_entradas[indice]['descricao']:
                         return 'Campo "DESCRIÇÃO" alterado com sucesso!'
                     else:
                         # loop para remover os indices antigos ligados a palavra
-                        for item in est.lista_entradas[indice_log_editar]['descricao']:
+                        for item in est.lista_entradas[indice]['descricao']:
                             est.palavras_desc_entradas[item].discard(id_entrada)
                             if not est.palavras_desc_entradas[item]:
                                 del est.palavras_desc_entradas[item] 
@@ -146,7 +145,7 @@ def editar_entradas():
                                 est.palavras_desc_entradas[item] = set()
                                 est.palavras_desc_entradas[item].add(id_entrada)
                             
-                    est.lista_entradas[indice_log_editar]['descricao'] = nova_descricao                        
+                    est.lista_entradas[indice]['descricao'] = nova_descricao                        
                     return 'Campo "DESCRIÇÃO" alterado com sucesso!'
 
                 case '3':
@@ -154,10 +153,10 @@ def editar_entradas():
                     listar_categorias()
                     while True:
                         id_nova_categoria = u.ler_valida_id()                           
-                        encontrou_id, indice_categoria = u.encontra_id_e_retorna_index(id_nova_categoria, est.lista_categorias)
+                        encontrou_id, indice_categoria = u.encontra_campo_e_indice(id_nova_categoria, est.lista_categorias,'id')
 
                         if encontrou_id:
-                            est.lista_entradas[indice_log_editar]['categoria'] = est.lista_categorias[indice_categoria]['nome']
+                            est.lista_entradas[indice]['categoria'] = est.lista_categorias[indice_categoria]['nome']
                             return 'Campo "CATEGORIA" alterado com sucesso!'
                         else:
                             print('Tente novamente!')
@@ -175,7 +174,7 @@ def editar_entradas():
                             continue # se voltar erro, pede data novamente
                         else:                               
                             break # senão, valor é válido e insere data
-                    est.lista_entradas[indice_log_editar]['data'] = data
+                    est.lista_entradas[indice]['data'] = data
                     return 'Campo "DATA" alterado com sucesso!'
 
                 case _: # _ é como se fosse um 'ELSE'. usar | (barra reta) é como um OR
@@ -189,24 +188,23 @@ def remover_entradas():
     if est.lista_entradas: #se conter logs de entrada, da inicio ao processo
         listar_entradas()
 
-        id_entrada = u.ler_valida_id() #while true e try/except para ler id informado
-
-        achou, indice_log_remover = u.encontra_id_e_retorna_index(id_entrada, est.lista_entradas)
+        id_entrada = u.ler_valida_id()
+        achou, indice = u.encontra_campo_e_indice(id_entrada, est.lista_categorias,'id')
                         # verifica se o id informado pelo user existe e se existir retorna sua posição
                         # indice será usado para sabermos onde o id informado está 
         if not achou:
             return 'Entrada não encontrada ou cadastrada!'
                 
         else:
-            id_removido = est.lista_entradas[indice_log_remover]['id']
+            id_removido = est.lista_entradas[indice]['id']
             # ex: ID 15 pode estar no indice [4]
 
-            for item in est.lista_entradas[indice_log_remover]['descricao']:
+            for item in est.lista_entradas[indice]['descricao']:
                 est.palavras_desc_entradas[item].discard(id_removido)
                 if not est.palavras_desc_entradas[item]: # se o set ficou vazio (a palavra (key) so aparecia nesse log) então exclui a key
                     del est.palavras_desc_entradas[item]
 
-            est.lista_entradas.pop(indice_log_remover)
+            est.lista_entradas.pop(indice)
             return (f'Entrada de ID: {id_removido} foi removida!')
             
     else:
@@ -254,21 +252,22 @@ def buscar_por_descricao():
 def buscar_por_categoria():
 
     if est.lista_entradas: #verifica se a lista de entrada possui elementos
+
         u.listar_categorias()
         u.double_line()
-        id_entrada = u.ler_valida_id()
 
-        achou_categoria, indice_categoria = u.encontra_id_e_retorna_index(id_entrada, est.lista_categorias)
+        id_entrada = u.ler_valida_id()
+        achou, indice = u.encontra_campo_e_indice(id_entrada, est.lista_categorias,'id')
                         # verifica se o id informado pelo user existe e se existir retorna sua posição
                         # indice será usado para sabermos onde o id informado está 
-        if not achou_categoria: 
+        if not achou: 
             return 'Não existe categoria com o ID informado!'
             #verifica se existem categoria com o ID informado
         else:
         
-            categoria = est.lista_categorias[indice_categoria]['nome']
+            nome_categoria = est.lista_categorias[indice]['nome']
 
-            if u.categoria_in_entrada(categoria, est.lista_entradas):
+            if u.encontra_campo_e_indice(nome_categoria, est.lista_entradas,'categoria')[0]:
 
                 u.double_line()
                 print('LISTA DE ENTRADAS'.center(u.size,' '))
@@ -277,7 +276,7 @@ def buscar_por_categoria():
                 u.line()
 
                 for item in est.lista_entradas:
-                    if item['categoria'] == categoria:
+                    if item['categoria'] == nome_categoria:
                         descricao = ' '.join(item['descricao'])
                         print(
                             f'{item["id"]:<5}'
