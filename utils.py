@@ -124,9 +124,9 @@ def encontra_campo_e_indice(ref_valor, ref_lista,campo_alvo):
     existe em algum registro da lista de entrada
     '''
 
-    for indice, item in enumerate(ref_lista):
+    for index, item in enumerate(ref_lista):
         if item [campo_alvo] == ref_valor:
-            return True, indice
+            return True, index
     else:  
         return False, -1
     
