@@ -9,7 +9,7 @@ def adicionar_entradas():
     valor_entrada = input('Digite o valor em R$ da entrada: ')
     valor_entrada = u.converte_moeda(valor_entrada)
 
-    # isinstance(varivael que vamos verificar, tipo esperado)
+    # isinstance(varivael que vamos verificar, tipo esperado que ela seja)
     # retorna True se valor_entrada for str / caso o tipo for tupla e o valor um elemento q esta na tupla, ent True
     if isinstance(valor_entrada,str):
         return valor_entrada
@@ -75,35 +75,36 @@ def listar_entradas():
         return 'Registro de entradas vazio. Nenhuma entrada para listar!'
     
     else:
-        u.double_line()
-        print('LISTA DE ENTRADAS'.center(u.size,' '))
-        u.double_line()
-        print(f'{"ID":<5}{"VALOR":<15}{"DESCRIÇÃO":<30}{"CATEGORIA":<20}{"DATA":<12}')
-        u.line()
+        
+        u.imprime_colunas('ENTRADAS')
+
+        num_registros = 0
         for item in est.lista_entradas:
            descricao = ' '.join(item['descricao'])
+           num_registros += 1
            print(
-            f'{item["id"]:<5}'
-            f'R${item["valor"]:<13.2f}'#.2f = duas casas decimais
-            f"{descricao:<30}"
-            f'{item["categoria"]:<20}'
-            f'{item["data"]:<12}'
+                f'{item["id"]:<5}'
+                f'R${item["valor"]:<13.2f}'#.2f = duas casas decimais
+                f"{descricao:<30}"
+                f'{item["categoria"]:<20}'
+                f'{item["data"]:<12}'
             )
-           
-        u.double_line()  
+        u.double_line()
+        print(f'Total de registros: {num_registros}') 
         return 'Lista retornada com sucesso!'
     
 def editar_entradas():
 
     if est.lista_entradas: #se conter logs de entrada, da inicio ao processo
         listar_entradas()
+        u.double_line()
 
         id_entrada = u.ler_valida_id() #while true e try/except para ler id informado
         achou, indice = u.encontra_campo_e_indice(id_entrada,est.lista_entradas,'id')
                         # verifica se o id informado pelo user existe e se existir retorna sua posição
                         # indice será usado para sabermos onde o id informado está 
         if not achou:
-            return 'Entrada não encontrada ou cadastrada!'
+            return 'Entrada não cadastrada!'
                 
         else:
             print('Qual campo dessa entrada você deseja editar? ')
@@ -191,13 +192,14 @@ def remover_entradas():
     
     if est.lista_entradas: #se conter logs de entrada, da inicio ao processo
         listar_entradas()
+        u.double_line()
 
         id_entrada = u.ler_valida_id()
         achou, indice = u.encontra_campo_e_indice(id_entrada, est.lista_entradas,'id')
                         # verifica se o id informado pelo user existe e se existir retorna sua posição
                         # indice será usado para sabermos onde o id informado está 
         if not achou:
-            return 'Entrada não encontrada ou cadastrada!'
+            return 'Entrada não cadastrada!'
                 
         else:
             id_removido = est.lista_entradas[indice]['id']
@@ -231,15 +233,13 @@ def buscar_por_descricao():
         else:
             ids_encontrados = est.palavras_desc_entradas[palavra_chave_busca] #recebe os id das entradas da respectiva palavra chave
 
-            u.double_line()
-            print('LISTA DE ENTRADAS'.center(u.size,' '))
-            u.double_line()
-            print(f'{"ID":<5}{"VALOR":<15}{"DESCRIÇÃO":<30}{"CATEGORIA":<20}{"DATA":<12}')
-            u.line()
+            u.imprime_colunas('ENTRADAS')
             
+            num_registros = 0
             for item in est.lista_entradas: #percorre a lista de entradas comparando [id] com os id relacionados a palavra-chave
                 if item['id'] in ids_encontrados:
                     descricao = ' '.join(item['descricao'])
+                    num_registros += 1
                     print(
                         f'{item["id"]:<5}'
                         f'R${item["valor"]:<13.2f}'
@@ -247,14 +247,14 @@ def buscar_por_descricao():
                         f'{item["categoria"]:<20}'
                         f'{item["data"]:<12}'
                     )
-
             u.double_line()
+            print(f'Total de registros: {num_registros}')
             return ('Consulta por descrição retornada com sucesso!')
     else:
         return('Nenhuma entrada foi registrada ainda! Nada para consultar!')
 
 def buscar_por_categoria():
-
+    
     if est.lista_entradas: #verifica se a lista de entrada possui elementos
 
         u.listar_categorias()
@@ -268,20 +268,18 @@ def buscar_por_categoria():
             return 'Não existe categoria com o ID informado!'
             #verifica se existem categoria com o ID informado
         else:
-        
+            u.limpar_tela()
             nome_categoria = est.lista_categorias[indice]['nome']
 
             if u.encontra_campo_e_indice(nome_categoria, est.lista_entradas,'categoria')[0]:
+                
+                u.imprime_colunas('ENTRADAS')
 
-                u.double_line()
-                print('LISTA DE ENTRADAS'.center(u.size,' '))
-                u.double_line()
-                print(f'{"ID":<5}{"VALOR":<15}{"DESCRIÇÃO":<30}{"CATEGORIA":<20}{"DATA":<12}')
-                u.line()
-
+                num_registros = 0
                 for item in est.lista_entradas:
                     if item['categoria'] == nome_categoria:
                         descricao = ' '.join(item['descricao'])
+                        num_registros += 1
                         print(
                             f'{item["id"]:<5}'
                             f'R${item["valor"]:<13.2f}'
@@ -289,6 +287,8 @@ def buscar_por_categoria():
                             f'{item["categoria"]:<20}'
                             f'{item["data"]:<12}'
                         )
+                u.double_line()
+                print(f'Total de registros: {num_registros}')
                 return 'Lista retornada com sucesso!'
             else:
                 return('Não existem entradas com a categoria indicada!')

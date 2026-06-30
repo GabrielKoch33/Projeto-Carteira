@@ -4,6 +4,10 @@ import time
 from datetime import date,datetime, timedelta
 from categorias import *
 
+# variaveis importantes
+size = 82
+saldo = ''
+
 def limpar_tela():
     # Usa o módulo subprocess, recomendado pelas diretrizes atuais do Python
     if sys.platform.startswith("win"):
@@ -17,11 +21,20 @@ def pause():
 def read_key():
     input("Pressione ENTER para voltar ao menu...")
 
-size = 82
+
 def double_line():
     print('='*size) 
 def line():
     print('-'*size)
+
+def imprime_colunas(ref_modulo):
+    
+    limpar_tela()
+    double_line()
+    print(f'LISTA DE {ref_modulo}'.center(size,' '))
+    double_line()
+    print(f'{"ID":<5}{"VALOR":<15}{"DESCRIÇÃO":<30}{"CATEGORIA":<20}{"DATA":<12}')
+    line()
 
 def calcula_saldo():
     pass
@@ -48,7 +61,7 @@ def ler_opcao_menu(num_max_opcao):
 def converte_moeda(valor):
 
     if valor == '':
-        return 'Valores vazios não são permitidos'
+        return 'Valores vazios não são permitidos!'
     
     try:
         valor = valor.replace('.', '')
@@ -59,7 +72,7 @@ def converte_moeda(valor):
         return 'Formato inválido'
     
     if valor <= 0:
-        return 'Valores negativos ou nulos não são permitidos'
+        return 'Valores negativos ou nulos não são permitidos!'
     
     return valor
           

@@ -13,7 +13,7 @@ def listar_despesa():
     # print('='* u.size)
     # print('LISTA DE DESPESAS'.center(u.size,' '))
     # print('='* u.size)
-
+    # valor, descricao, categoria, data
     u.read_key()
     pass
 def buscar_por_descricao():

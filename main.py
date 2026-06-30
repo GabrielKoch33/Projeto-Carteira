@@ -8,6 +8,7 @@ import visualizacoes as views
 import analises as anl
 import metas as met
 import utils as u
+import dados
 
 def main_menu():
     while True:
@@ -49,6 +50,32 @@ def main_menu():
             break
 
 if __name__ == '__main__':
+    '''
+    Fazer verificação: se o arquivo que guarda os dados estiver vazio
+    Então pedimos o saldo pela 1ª e única vez
+    Senão, Abrimos o arquivos e pegamos o saldo armazenado.
+    '''
+    while True:
+        u.saldo = input('Qual é o seu saldo atual?: ').strip()
+
+        if not u.saldo:
+            print('Valores vazios não são permitidos!')
+            continue
+
+        try:
+            u.saldo = u.saldo.replace('.', '')
+            u.saldo = u.saldo.replace(',', '.')
+            u.saldo = float(u.saldo)
+
+        except:
+            print('Por favor, insira um valor numérico válido.')
+            continue
+
+        if u.saldo < 0:
+            print('Valores negativos não são permitidos!')
+            continue
+
+        break
 
     print('Iniciando...')
     time.sleep(1)
